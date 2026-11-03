@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="cs"><head><meta name="robots" content="noindex,nofollow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Studio PS – foto, video, AI a podcasty v Plzni</title>
+<meta name="description" content="Jedno studio. Čtyři lidi. Celá produkce. Foto, video, AI produkce a podcasty z vlastního studia v Plzni na Slovanech.">
+<link rel="icon" href="img/clona-64.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0a;--bg2:#121110;--line:#26241f;--t:#f2eee6;--m:#8a857b;--s:#c2bbaa;--g:#e0b13c;--pad:48px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--t);font:400 16px/1.6 Inter,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.mono{font:500 11px/1.3 "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--g);color:#111;padding:15px 20px;font-weight:600;white-space:nowrap}
+.btn2{display:inline-flex;align-items:center;border:1.5px solid rgba(242,238,230,.6);padding:14px 18px;font-weight:600;white-space:nowrap}
+.stripe{height:16px;background:repeating-linear-gradient(-60deg,#111 0 22px,var(--g) 22px 44px)}
+section{position:relative}
+.sec{padding:110px var(--pad)}
+.sec-h{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:40px}
+.sec-h .k{color:var(--g);margin-bottom:14px;display:block}
+.sec-h h2{font:700 clamp(34px,4vw,60px)/1.02 Poppins;letter-spacing:-.035em}
+.sec-h p{color:var(--m);max-width:40ch}
+
+/* ===== hero = hledáček ===== */
+.hero{height:100vh;min-height:680px;overflow:hidden}
+.slides{position:absolute;inset:0}
+/* přechod „Střih": nový snímek přejede šikmým řezem PŘES starý (ten zůstává celý vidět),
+   po hraně jede zlatá linka; pohyb fotky běží nepřerušeně až do jejího zmizení */
+.sl{position:absolute;inset:0;visibility:hidden;z-index:0}
+.sl.live{visibility:visible}
+.sl.out{z-index:1}
+.sl.on{z-index:2}
+.cut{position:absolute;top:50%;left:-10%;width:3px;background:var(--g);box-shadow:0 0 16px 2px rgba(224,177,60,.6);z-index:3;opacity:0;pointer-events:none}
+.sl img{width:100%;height:100%;object-fit:cover;object-position:var(--p);transform:scale(var(--s0,1.06)) translate(var(--x0,0),var(--y0,0));will-change:transform}
+.sl.live img{animation:kb var(--kb,9s) linear both}
+@keyframes kb{from{transform:scale(var(--s0)) translate(var(--x0),var(--y0))}to{transform:scale(var(--s1)) translate(var(--x1),var(--y1))}}
+.prog{position:absolute;z-index:4;left:72px;bottom:52px;display:flex;gap:6px}
+.prog button{width:30px;height:16px;padding:7px 0;background:none;border:0;cursor:pointer}
+.prog i{display:block;height:2px;background:rgba(242,238,230,.3);position:relative;overflow:hidden}
+.prog i::after{content:"";position:absolute;inset:0;background:var(--g);transform:scaleX(0);transform-origin:left}
+.prog .done i::after{transform:scaleX(1)}
+.prog .on i::after{animation:pr var(--dur,6s) linear forwards}
+@keyframes pr{to{transform:scaleX(1)}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,11,10,.95) 0%,rgba(11,11,10,.8) 34%,rgba(11,11,10,.42) 62%,rgba(11,11,10,.5) 100%)}
+.top{position:absolute;z-index:6;inset:0 0 auto;display:flex;justify-content:space-between;align-items:center;padding:26px var(--pad)}
+.top img{height:28px;width:auto}
+.top nav{display:flex;gap:34px;font-size:14px;font-weight:500;align-items:center}
+.top nav .cta{border:1.5px solid var(--g);color:var(--g);padding:9px 16px}
+.burger{display:none;background:none;border:0;color:var(--t);width:44px;height:44px;cursor:pointer}
+.mnav{position:fixed;inset:0;z-index:5;background:#0b0b0a;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:90px 24px 40px}
+.mnav[hidden]{display:none}
+.mnav a{font:700 38px/1.2 Poppins;letter-spacing:-.03em}
+.mnav .btn{font:600 17px Inter;align-self:flex-start;margin-top:22px}
+.mnav .mono{color:var(--m);margin-top:26px}
+body.menu .top{position:fixed}
+.vf{position:absolute;z-index:3;inset:96px var(--pad) 92px;pointer-events:none}
+.vf i{position:absolute;width:44px;height:44px;border:0 solid rgba(242,238,230,.75)}
+.vf .a{top:0;left:0;border-top-width:2px;border-left-width:2px}.vf .b{top:0;right:0;border-top-width:2px;border-right-width:2px}
+.vf .c{bottom:0;left:0;border-bottom-width:2px;border-left-width:2px}.vf .d{bottom:0;right:0;border-bottom-width:2px;border-right-width:2px}
+.vf .x{position:absolute;left:50%;top:42%;width:28px;height:28px;translate:-50% -50%}
+.vf .x::before,.vf .x::after{content:"";position:absolute;background:rgba(242,238,230,.5)}
+.vf .x::before{left:13px;top:0;width:2px;height:28px}.vf .x::after{top:13px;left:0;height:2px;width:28px}
+.hud{position:absolute;z-index:4;color:var(--t);background:rgba(10,9,8,.5);padding:6px 9px;border-radius:2px}
+.hud.l{top:116px;left:72px;display:flex;align-items:center;gap:8px}
+.hud.l::before{content:"";width:9px;height:9px;border-radius:50%;background:#e5483b;animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.hud.r{top:116px;right:72px}
+.copy{position:absolute;z-index:4;left:72px;right:72px;bottom:96px;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:48px;align-items:end}
+h1{font:800 clamp(48px,6.4vw,108px)/.95 Poppins;letter-spacing:-.045em}
+h1 em,h2 em{font-style:normal;color:var(--g)}
+.side p{color:#d4cec2;margin-bottom:22px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.fork{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fk{position:relative;display:block;padding:14px 16px 14px;border:1.5px solid rgba(242,238,230,.55);background:rgba(11,11,10,.45);backdrop-filter:blur(6px);transition:transform .2s,border-color .2s,background .2s}
+.fk .mono{display:block;font-size:10px;color:var(--s);margin-bottom:8px}
+.fk b{display:block;font:700 20px/1.1 Poppins;letter-spacing:-.02em}
+.fk small{display:block;font-size:13px;color:var(--s);margin-top:4px;padding-right:18px}
+.fk i{position:absolute;right:12px;bottom:12px;font-style:normal;font-size:18px;transition:transform .2s}
+.fk:hover{transform:translateY(-3px);border-color:var(--g)}.fk:hover i{transform:translateX(3px)}
+.fk.g{background:var(--g);border-color:var(--g);color:#111}
+.fk.g .mono,.fk.g small{color:#3a2f10}
+.reel-l{display:inline-flex;align-items:center;gap:10px;margin-top:16px;font-weight:600;font-size:15px}
+.reel-l span{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--t);display:grid;place-items:center;font-size:10px}
+.reel-l:hover{color:var(--g)}.reel-l:hover span{border-color:var(--g)}
+.tc{position:absolute;z-index:4;right:72px;bottom:56px;font:500 14px "JetBrains Mono";letter-spacing:.1em}
+.hero .stripe{position:absolute;z-index:5;left:0;right:0;bottom:0}
+
+/* ===== služby = střihová osa ===== */
+.nle{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.nle .ph{top:0;bottom:0;left:calc(80px + 1%)}
+.nle .ph::before{top:0}
+.tcread{position:absolute;right:12px;top:6px;z-index:4;font:500 11px "JetBrains Mono";color:var(--g);letter-spacing:.1em}
+.clip.on{border-color:var(--g);box-shadow:0 0 0 1px var(--g),0 10px 30px -10px rgba(224,177,60,.45)}
+.clip.on .in{background:linear-gradient(180deg,#4a3d18,#33290f)}
+.ruler{display:grid;grid-template-columns:80px 1fr;border-bottom:1px solid var(--line)}
+.ruler>div:first-child{border-right:1px solid var(--line)}
+.ticks{position:relative;height:30px;background:repeating-linear-gradient(90deg,#3a372f 0 1px,transparent 1px 12px) bottom/100% 7px no-repeat,repeating-linear-gradient(90deg,#5a564b 0 1px,transparent 1px 120px) bottom/100% 14px no-repeat}
+.ticks span{position:absolute;top:5px;font:500 10px "JetBrains Mono";color:#7b766b}
+.track{display:grid;grid-template-columns:80px 1fr;border-bottom:1px solid var(--line);height:170px}
+.track.a{border-bottom:0;height:56px}
+.lab{display:flex;align-items:center;justify-content:center;border-right:1px solid var(--line);color:#9a9488;background:#171612}
+.lane{position:relative}
+.clip{position:absolute;top:10px;bottom:10px;border-radius:5px;overflow:hidden;border:1.5px solid rgba(255,255,255,.12);display:flex;transition:border-color .2s}
+.clip:hover{border-color:var(--g)}
+.clip .th{width:170px;flex:none;background-size:cover;background-position:center}
+.clip .in{padding:16px 18px;background:#2a2619;flex:1;min-width:0}
+.clip.v .in{background:linear-gradient(180deg,#3b331c,#2b2615)}
+.clip .in b{display:block;font:600 19px/1.15 Poppins;margin:4px 0 6px}
+.clip .in span{font-size:14px;color:var(--s);display:block}
+.clip .in small{font:500 10px "JetBrains Mono";color:var(--g);letter-spacing:.1em}
+.wave{position:absolute;top:8px;bottom:8px;left:1%;width:97%;border-radius:4px;background:#1d2a22;border:1px solid #2f4637;overflow:hidden}
+.wave svg{position:absolute;inset:4px 0;width:100%;height:calc(100% - 8px)}
+.ph{position:absolute;top:-30px;bottom:0;left:1%;width:2px;background:var(--g);z-index:3;will-change:left}
+.ph::before{content:"";position:absolute;top:0;left:-7px;border:8px solid transparent;border-top:10px solid var(--g)}
+
+/* ===== filmový pás ===== */
+.film{margin:0 -20px;transform:rotate(-1.5deg);background:#141210;padding:20px 0;position:relative;z-index:2}
+.film::before,.film::after{content:"";position:absolute;left:0;right:0;height:9px;background:repeating-linear-gradient(90deg,transparent 0 12px,#e9e1cc 12px 24px);opacity:.7}
+.film::before{top:5px}.film::after{bottom:5px}
+.film-in{display:flex;gap:10px;padding:0 10px}
+.film-in figure{flex:1;aspect-ratio:3/2;overflow:hidden;position:relative;min-width:0}
+.film-in img{width:100%;height:100%;object-fit:cover}
+.film-in figcaption{position:absolute;left:5px;bottom:2px;font:500 10px "JetBrains Mono";color:#f0c94d}
+
+/* ===== portfolio = zásobník médií ===== */
+.bin{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}
+.media{position:relative;display:block;overflow:hidden;border-radius:6px;border:1px solid var(--line);background:#000}
+.media img{width:100%;aspect-ratio:16/9;object-fit:cover;opacity:.9;transition:transform .6s,opacity .3s}
+.media:hover img{transform:scale(1.03);opacity:1}
+.media .meta{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:var(--bg2);border-top:1px solid var(--line)}
+.media .meta b{font:600 15px/1.25 Poppins}
+.media .meta span{color:var(--m)}
+.media .dur{position:absolute;right:10px;top:10px;font:500 11px "JetBrains Mono";background:rgba(0,0,0,.7);padding:4px 7px;border-radius:2px}
+.media .pl{position:absolute;left:18px;bottom:66px;width:64px;height:64px;border-radius:50%;background:var(--g);color:#111;display:grid;place-items:center;font-size:20px;box-shadow:0 0 0 10px rgba(224,177,60,.18)}
+.media img.zoom{transform:scale(1.13)}
+.media:hover img.zoom{transform:scale(1.16)}
+.bin .side-list{display:grid;grid-template-rows:repeat(2,minmax(0,1fr));gap:18px;contain:size}
+.side-list .media{display:flex;flex-direction:column}
+.side-list .media img{flex:1;height:0;min-height:0;aspect-ratio:auto}
+@media (max-width:1000px){.bin .side-list{contain:none}.side-list .media img{height:auto;aspect-ratio:16/9;flex:none}}
+.bin1{grid-template-columns:1fr}.bin1 .media img{aspect-ratio:2/1}
+@media(max-width:760px){.bin1 .media img{aspect-ratio:16/9}.bin1 .media .pl{width:46px;height:46px;font-size:15px;left:12px;bottom:58px;box-shadow:0 0 0 6px rgba(224,177,60,.18)}}
+.bin3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}.bin4{grid-template-columns:repeat(4,1fr)}
+.foto-h{display:flex;justify-content:space-between;gap:16px;margin:56px 0 16px;padding-top:18px;border-top:1px solid var(--line)}
+.foto-h .k{color:var(--g)}.foto-h .mono:last-child{color:var(--m)}
+.fotky{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(150px,15vw,230px);grid-auto-flow:dense;gap:10px}
+.fotky figure{overflow:hidden;border-radius:4px;background:#151412}
+.fotky .t{grid-row:span 2}.fotky .w{grid-column:span 2;grid-row:span 2}.fotky .v{grid-column:span 2;grid-row:span 4}
+.fotky img{width:100%;height:100%;object-fit:cover;object-position:center 25%;transition:transform .6s}
+.fotky figure:hover img{transform:scale(1.04)}
+.more{display:inline-flex;gap:8px;color:var(--g);font-weight:600;white-space:nowrap}
+
+/* ===== studio = lokace ===== */
+.loc{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+.scout{min-width:0}
+.view{position:relative;aspect-ratio:3/2;overflow:hidden;border-radius:4px;background:#000}
+.view img{width:100%;height:100%;object-fit:cover;transition:opacity .25s}
+.view .tag{left:14px;top:14px}.view .cnt{right:14px;top:14px}.view .cap{left:14px;bottom:14px}
+.thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
+.thumbs button{padding:0;border:2px solid transparent;border-radius:3px;overflow:hidden;cursor:pointer;background:none;aspect-ratio:3/2;opacity:.55;transition:.2s}
+.thumbs button img{width:100%;height:100%;object-fit:cover}
+.thumbs button:hover{opacity:.85}
+.thumbs button.on{border-color:var(--g);opacity:1}
+.loc-pics{position:relative;aspect-ratio:5/4}
+.loc-pics img{position:absolute;object-fit:cover;border-radius:4px}
+.loc-pics .a{left:0;top:0;width:82%;height:76%}
+.loc-pics .b{right:0;bottom:0;width:46%;height:42%;outline:6px solid var(--bg)}
+.loc-pics .tag{position:absolute;left:14px;top:14px}
+.loc h2{font:700 clamp(32px,3.6vw,54px)/1.04 Poppins;letter-spacing:-.035em;margin:14px 0 18px}
+.loc p{color:var(--s);margin-bottom:28px}
+.specs{border-top:1px solid var(--line);margin-bottom:32px}
+.specs div{display:flex;justify-content:space-between;gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}
+.specs .mono{color:var(--m)}
+.specs b{font-weight:500;text-align:right}
+
+/* ===== ceník pronájmu ===== */
+.cena{display:grid;grid-template-columns:auto 1fr 1fr;align-items:center;gap:8px 28px;border:1px solid var(--g);border-radius:4px;padding:16px 20px;margin:-8px 0 28px}
+.cena .mono{color:var(--g)}
+.cena b{display:block;font:700 24px/1.1 Poppins;letter-spacing:-.02em}
+.cena small{color:var(--m);font-size:13px}
+
+/* ===== reference ===== */
+.loga{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:44px 72px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:48px max(0px,calc((100% - 1000px)/2))}  /* šířka 1000 px → řady 5 + 4 */
+.loga img{display:block;width:auto;opacity:.62;transition:opacity .25s}
+.loga li:hover img{opacity:1}
+.form .gdpr{font-size:13px;color:var(--m);margin-top:-4px}
+
+/* ===== štáb ===== */
+.crew{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.crew figure{position:relative;aspect-ratio:4/5;overflow:hidden;border-radius:4px;background:#151412;margin-bottom:16px}
+.crew figure img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:grayscale(1) contrast(1.05);transition:filter .4s}
+.crew article:hover figure img{filter:none}
+.crew figure.lk{display:grid;place-items:center;border:1px dashed var(--line)}
+.crew figure.lk img{width:34%;height:auto;filter:none;opacity:.5}
+.crew .slate{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:8px 12px;background:rgba(10,9,8,.72)}
+.crew h3{font:700 24px/1.1 Poppins;letter-spacing:-.02em;margin-bottom:6px}
+.crew p{color:var(--m);font-size:15px}
+
+/* ===== kontakt ===== */
+.end{padding:110px var(--pad) 100px;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.end h2{font:800 clamp(40px,4.8vw,80px)/.98 Poppins;letter-spacing:-.045em;margin:16px 0 22px;max-width:12ch}
+.end-l>p{color:var(--s);max-width:40ch;margin-bottom:36px}
+.cinfo{border-top:1px solid var(--line)}
+.cinfo>*{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.cinfo .mono{color:var(--m)}.cinfo b{font-weight:500}
+.cinfo a:hover b{color:var(--g)}
+.form{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:28px;display:grid;gap:18px}
+.f-top{display:flex;justify-content:space-between;color:var(--m);padding-bottom:14px;border-bottom:1px solid var(--line)}
+.f-top span:first-child{color:#e5483b}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form label>.mono,.form legend{display:block;color:var(--m);margin-bottom:8px}
+.form input:not([type=checkbox]),.form textarea{width:100%;background:#0b0b0a;border:1px solid #33302a;border-radius:3px;color:var(--t);font:400 16px Inter;padding:13px 14px;outline:none;resize:vertical}
+.form input:focus,.form textarea:focus{border-color:var(--g)}
+.form fieldset{border:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips span{display:inline-block;border:1px solid #3a372f;border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer;transition:.15s}
+.chips input:checked+span{background:var(--g);border-color:var(--g);color:#111}
+.chips input:focus-visible+span{outline:2px solid var(--g);outline-offset:2px}
+.form .btn{justify-self:start;border:0;cursor:pointer;font:600 16px Inter}
+.end .k{color:var(--g)}
+footer{border-top:1px solid var(--line);padding:30px var(--pad);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;color:var(--m);font-size:14px}
+footer img{height:24px;width:auto}
+footer nav{display:flex;gap:22px}
+footer a:hover{color:var(--g)}
+
+/* ===== mobil ===== */
+@media (max-width:1000px){
+  :root{--pad:28px}
+  .copy{grid-template-columns:1fr;gap:24px}
+  .bin{grid-template-columns:1fr}.bin .side-list{grid-template-columns:1fr 1fr;grid-template-rows:none}
+  .loc{grid-template-columns:1fr}
+  .crew{grid-template-columns:repeat(2,1fr)}
+  .bin4{grid-template-columns:1fr 1fr}
+  .loga{display:grid;grid-template-columns:repeat(3,1fr);justify-items:center;padding:40px 0}
+  .end{grid-template-columns:1fr}
+  /* osa → seznam klipů */
+  .ruler,.track.a,.ph,.lab{display:none}
+  .nle{background:none;border:0;display:grid;gap:12px}
+  .track,.lane{display:contents}
+  .clip{position:static;width:auto!important;height:auto}
+  .nle{grid-template-columns:1fr 1fr}
+}
+@media (max-width:760px){
+  :root{--pad:16px}
+  .top{padding:18px 16px}.top img{height:24px;width:auto}
+  .top nav{display:none}.burger{display:block}
+  .vf{inset:72px 12px 40px}
+  .hud.l{top:86px;left:24px}.hud.r{display:none}
+  .nle{grid-template-columns:1fr}
+  .vf .x{display:none}
+  .sl img{object-position:var(--pm)}
+  .prog{left:24px;bottom:50px}
+  .prog button{width:22px}
+
+  .copy{left:24px;right:24px;bottom:70px}
+  h1{font-size:44px}
+  .side p{font-size:15px;margin-bottom:16px}
+  .fk{padding:12px 30px 12px 12px}
+  .fk i{right:10px;bottom:auto;top:50%;translate:0 -50%}
+  .fk .mono{display:none}
+  .fk b{font-size:17px}
+  .fk small{display:none}
+  .reel-l{margin-top:12px;font-size:14px}
+  .tc{display:none}
+  .sec{padding:72px 16px}
+  .sec-h{flex-direction:column;align-items:flex-start;gap:12px}
+  .clip .th{width:110px}
+  .clip .in{padding:12px 14px}
+  .clip .in b{font-size:17px}
+  .bin3,.bin4{grid-template-columns:1fr}
+  .fotky{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;gap:8px}
+  .foto-h .mono:last-child{display:none}
+  .bin .side-list{grid-template-columns:1fr}
+  .media .pl{width:64px;height:64px}
+  .film-in figure:nth-child(n+5){display:none}
+  .thumbs{grid-template-columns:repeat(5,72px);overflow-x:auto;scrollbar-width:none}
+  .view .cap{display:none}
+  .crew{gap:12px}.crew h3{font-size:20px}.crew p{font-size:14px}
+  .end{padding:72px 16px;gap:36px}
+  .row2{grid-template-columns:1fr}
+  .cena{grid-template-columns:1fr 1fr}.cena .mono{grid-column:1/-1}
+  .loga{display:flex;gap:32px 40px;padding:36px 0}.loga img{max-width:40vw;object-fit:contain}
+  .form{padding:20px}
+  .form .btn{justify-self:stretch;justify-content:center}
+  footer{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style><meta property="og:type" content="website"><meta property="og:locale" content="cs_CZ"><meta property="og:site_name" content="Studio PS"><meta property="og:title" content="Studio PS – foto, video, AI a podcasty v Plzni"><meta property="og:description" content="Jedno studio. Čtyři lidi. Celá produkce. Foto, video, AI produkce a podcasty z vlastního studia v Plzni na Slovanech."><meta property="og:url" content="https://studiops.cz/"><meta property="og:image" content="https://studiops.cz/img/og/index.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://studiops.cz/#studio", "name": "Studio PS", "slogan": "Jedno studio. Čtyři lidi. Celá produkce.", "description": "Foto a video studio v Plzni na Slovanech: portréty a produktové foto, komerční video, AI produkce a podcasty. Ateliér o rozloze cca 70 m² k pronájmu.", "url": "https://studiops.cz/", "logo": "https://studiops.cz/img/logo-bila.png", "image": "https://studiops.cz/img/og/index.jpg", "email": "info@studiops.cz", "telephone": "+420776542686", "address": {"@type": "PostalAddress", "streetAddress": "Houškova 35", "addressLocality": "Plzeň", "addressRegion": "Plzeňský kraj", "addressCountry": "CZ"}, "areaServed": "Plzeň a Plzeňský kraj", "sameAs": ["https://www.instagram.com/studio__ps_/", "https://www.youtube.com/@StudioPS-hr6ec", "https://www.facebook.com/profile.php?id=61553299647324"], "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Portréty a produktové foto", "url": "https://studiops.cz/portrety.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Komerční video", "url": "https://studiops.cz/video.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AI produkce", "url": "https://studiops.cz/ai.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Podcasty a video podcasty", "url": "https://studiops.cz/podcasty.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Pronájem studia", "description": "Ateliér na focení, podcastová scéna a zázemí, cca 70 m², Houškova 35, Plzeň"}, "priceSpecification": [{"@type": "UnitPriceSpecification", "price": 1500, "priceCurrency": "CZK", "description": "první 2 hodiny"}, {"@type": "UnitPriceSpecification", "price": 1000, "priceCurrency": "CZK", "unitCode": "HUR", "description": "každá další hodina"}]}]}</script>
+</head><body>
+
+<section class="hero">
+  <div class="slides" id="slides">
+    <figure class="sl on live" style="--p:center 30%;--pm:center top" data-l="Štáb · Studio PS" data-r="4 lidi · 1 studio"><picture><source media="(max-width:760px)" srcset="img/slide/tymm.webp"><img src="img/slide/tym.webp" alt="Tým Studia PS" fetchpriority="high"></picture></figure>
+    <figure class="sl" style="--p:center 40%;--pm:24% 40%" data-l="REC · Kamera A" data-r="4K · 25P · 1/50 · F2.8"><img data-src="img/hero.webp" alt="Rozhovor ve studiu"></figure>
+    <figure class="sl" style="--p:center 50%;--pm:center 45%" data-l="REC · Kamera B" data-r="4K · 25P · 1/50 · F2"><picture><source media="(max-width:760px)" data-srcset="img/slide/06m.webp"><img data-src="img/slide/06.webp" alt="Natáčení ve studiu"></picture></figure>
+    <figure class="sl" style="--p:center 55%;--pm:center 50%" data-l="Lokace · Studio PS" data-r="70 m² · Plzeň-Slovany"><img data-src="img/prostor/05.webp" alt="Podcastový kout ve studiu"></figure>
+    <figure class="sl" style="--p:center 45%;--pm:74% 40%" data-l="REC · Backstage" data-r="4K · 50P · 1/100 · F4"><img data-src="img/slide/03.webp" alt="Natáčení u klienta"></figure>
+    <figure class="sl" style="--p:center 55%;--pm:55% 50%" data-l="REC · Dron" data-r="4K · 30P · 1/60 · F2.8"><img data-src="img/kasperk.webp" alt="Hrad Kašperk při západu slunce"></figure>
+  </div>
+  <header class="top"><a href="#" aria-label="Studio PS – úvod"><img src="img/logo-bila.png" alt="Studio PS" width="860" height="201"></a><nav><a href="#sluzby">Služby</a><a href="#studio">Studio</a><a href="#portfolio">Portfolio</a><a href="#stab">O nás</a><a class="cta" href="#kontakt">Napište nám</a></nav>
+    <button class="burger" aria-label="Otevřít menu" aria-expanded="false" aria-controls="mnav"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h20M3 18h20"/></svg></button></header>
+  <nav class="mnav" id="mnav" hidden><a href="#sluzby">Služby</a><a href="#studio">Studio</a><a href="#portfolio">Portfolio</a><a href="#stab">O nás</a><a class="btn" href="#kontakt">Napište nám</a><span class="mono">info@studiops.cz · +420 776 542 686</span></nav>
+  <div class="vf"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><span class="x"></span></div>
+  <div class="hud l mono" id="hudL">Štáb · Studio PS</div><div class="hud r mono" id="hudR">4 lidi · 1 studio</div>
+  <div class="prog" id="prog"><button aria-label="Snímek 1"><i></i></button><button aria-label="Snímek 2"><i></i></button><button aria-label="Snímek 3"><i></i></button><button aria-label="Snímek 4"><i></i></button><button aria-label="Snímek 5"><i></i></button><button aria-label="Snímek 6"><i></i></button><button aria-label="Snímek 7"><i></i></button></div>
+  <div class="copy">
+    <h1>Jedno studio.<br>Čtyři lidi.<br><em>Celá produkce.</em></h1>
+    <div class="side"><p>Fotíme, točíme a stříháme pro Plzeň a okolí. Vlastní studio na Slovanech, od nápadu po hotový výstup.</p>
+      <nav class="fork" aria-label="Rozcestník">
+        <a class="fk g" href="#sluzby"><span class="mono">01 · Pro firmy i lidi</span><b>Naše služby</b><small>Foto, video, AI, podcasty</small><i>→</i></a>
+        <a class="fk" href="#studio"><span class="mono">02 · 70 m² na Slovanech</span><b>Pronájem studia</b><small>Ateliér, světla, podcastová scéna</small><i>→</i></a>
+      </nav>
+      <a class="reel-l" href="https://youtu.be/RwYApKnUtww"><span>▶</span>Pustit showreel</a></div>
+  </div>
+  <div class="tc">TC 00:00:12:08</div>
+  <div class="stripe"></div>
+</section>
+
+<section class="sec" id="sluzby">
+  <div class="sec-h"><div><span class="mono k">01 · Služby</span><h2>Co pro vás uděláme</h2></div><p>Celou produkci máme v jedné časové ose. Od prvního záběru po finální export.</p></div>
+  <div class="nle" id="nle"><div class="ph" id="ph"></div>
+    <div class="ruler"><div></div><div class="ticks"><span class="tcread" id="tcread">00:00:00:00</span><span style="left:4px">00:00</span><span style="left:20%">00:10</span><span style="left:40%">00:20</span><span style="left:60%">00:30</span><span style="left:80%">00:40</span></div></div>
+    <div class="track"><div class="lab mono">V2</div><div class="lane">
+      <a class="clip" href="portrety.html" style="order:1;left:1%;width:47%"><div class="th" style="background-image:url(img/sluzby/foto/02.webp);background-position:center 35%"></div><div class="in"><small>01 · FOTO</small><b>Portréty a produkty</b><span>Studiové světlo, které ladí s vaší značkou. Pro e-shop, web, kampaně i tisk.</span></div></a>
+      <a class="clip" href="ai.html" style="order:3;left:50%;width:48%"><div class="th" style="background-image:url(img/ai.webp)"></div><div class="in"><small>03 · AI</small><b>AI produkce</b><span>Generované obrazy a videa pro koncepty, vizualizace a kampaně.</span></div></a>
+    </div></div>
+    <div class="track"><div class="lab mono">V1</div><div class="lane">
+      <a class="clip v" href="video.html" style="order:2;left:1%;width:47%"><div class="th" style="background-image:url(img/svc-video.webp)"></div><div class="in"><small>02 · VIDEO</small><b>Komerční video</b><span>Promo, aftermovie, reklama. Scénář, natáčení, střih i barvy.</span></div></a>
+      <a class="clip v" href="podcasty.html" style="order:4;left:50%;width:48%"><div class="th" style="background-image:url(img/podcast.webp);background-position:center 40%"></div><div class="in"><small>04 · PODCAST</small><b>Podcasty</b><span>Vlastní podcastová scéna, dvě kamery a studiový zvuk. Celé díly i klipy na sítě.</span></div></a>
+      
+    </div></div>
+    <div class="track a"><div class="lab mono">A1</div><div class="lane"><div class="wave" id="wave"></div></div></div>
+  </div>
+</section>
+
+<div class="film" aria-hidden="true"><div class="film-in">
+  <figure><img src="img/pas/01.webp" alt="" loading="lazy"><figcaption>▸ 12A</figcaption></figure>
+  <figure><img src="img/pas/02.webp" alt="" loading="lazy"><figcaption>▸ 13A</figcaption></figure>
+  <figure><img src="img/pas/03.webp" alt="" loading="lazy"><figcaption>▸ 14A</figcaption></figure>
+  <figure><img src="img/pas/04.webp" alt="" loading="lazy"><figcaption>▸ 15A</figcaption></figure>
+  <figure><img src="img/pas/05.webp" alt="" loading="lazy"><figcaption>▸ 16A</figcaption></figure>
+  <figure><img src="img/pas/06.webp" alt="" loading="lazy"><figcaption>▸ 17A</figcaption></figure>
+  <figure><img src="img/pas/07.webp" alt="" loading="lazy"><figcaption>▸ 18A</figcaption></figure>
+</div></div>
+
+<section class="sec" id="studio">
+  <div class="loc">
+    <div class="scout">
+      <div class="view"><img id="scoutImg" src="img/prostor/01.webp" alt="Fotostěna se světly" loading="lazy"><span class="hud mono tag">Lokace · Plzeň-Slovany</span><span class="hud mono cnt" id="scoutCnt">01 / 05</span><span class="hud mono cap" id="scoutCap">Fotostěna se světly</span></div>
+      <div class="thumbs" role="tablist" aria-label="Fotky studia">
+        <button class="on" data-i="01" data-cap="Fotostěna se světly"><img src="img/prostor/01-n.webp" alt="" loading="lazy"></button>
+        <button data-i="02" data-cap="Celý ateliér s krbem"><img src="img/prostor/02-n.webp" alt="" loading="lazy"></button>
+        <button data-i="03" data-cap="Pohled shora"><img src="img/prostor/03-n.webp" alt="" loading="lazy"></button>
+        <button data-i="04" data-cap="Zázemí a odpočinková zóna"><img src="img/prostor/04-n.webp" alt="" loading="lazy"></button>
+        <button data-i="05" data-cap="Podcastová scéna"><img src="img/prostor/05-n.webp" alt="" loading="lazy"></button>
+      </div>
+    </div>
+    <div>
+      <span class="mono" style="color:var(--g)">02 · Studio a pronájem</span>
+      <h2>70 m² na Slovanech, kde natočíte <em>skoro cokoli</em></h2>
+      <p>Ateliér na focení, podcastová scéna a zázemí pro celý natáčecí den. Studio si můžete pronajmout i bez nás.</p>
+      <div class="specs">
+        <div><span class="mono">Prostor</span><b>cca 70 m² · Houškova 35, Plzeň</b></div>
+        <div><span class="mono">Záblesky</span><b>Godox · odpalovač pro Sony, Nikon i Canon</b></div>
+        <div><span class="mono">Trvalá světla</span><b>Nanlite</b></div>
+        <div><span class="mono">Podcastové mikrofony</span><b>Rode</b></div>
+        <div><span class="mono">Zázemí</span><b>kuchyňka, WC, sprcha a zahrádka</b></div>
+      </div>
+      <div class="cena"><span class="mono">Ceník pronájmu</span><div><b>1 500 Kč</b><small>první 2 hodiny</small></div><div><b>1 000 Kč</b><small>každá další hodina</small></div></div>
+      <div class="btns"><a class="btn" href="#kontakt">Rezervovat studio</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="portfolio" style="padding-top:20px">
+  <div class="sec-h"><div><span class="mono k">03 · Portfolio</span><h2>Z naší <em>střižny</em></h2></div><a class="more" href="https://www.youtube.com/@StudioPS-hr6ec">Všechna videa na YouTube →</a></div>
+  <div class="bin bin1">
+    <a class="media" href="https://youtu.be/RwYApKnUtww"><img src="img/reel.webp" alt="Showreel Studio PS" loading="lazy"><span class="pl">▶</span><span class="dur">SHOWREEL</span><div class="meta"><b>Showreel 2024</b><span class="mono">Průřez tvorbou</span></div></a>
+  </div>
+  <div class="bin3">
+    <a class="media" href="https://youtu.be/Vozil1n-c-M"><img src="https://i.ytimg.com/vi/Vozil1n-c-M/maxresdefault.jpg" alt="Půlmaraton Plzeňského kraje" loading="lazy"><div class="meta"><b>Půlmaraton Plzeňského kraje</b><span class="mono">Oficiální spot</span></div></a>
+    <a class="media" href="https://youtu.be/6iRxB7B1G1o"><img src="img/video/slunce.webp" alt="Slunce ve skle" loading="lazy"><div class="meta"><b>Slunce ve skle</b><span class="mono">Aftermovie</span></div></a>
+    <a class="media" href="https://youtu.be/lJ_bD581QIw"><img src="https://i.ytimg.com/vi/lJ_bD581QIw/maxresdefault.jpg" alt="Visit Plzeňský kraj" loading="lazy"><div class="meta"><b>Visit Plzeňský kraj</b><span class="mono">Short</span></div></a>
+  </div>
+  <div class="foto-h"><span class="mono k">Fotografie</span><span class="mono">Portréty · Rodiny · Interiéry</span></div>
+  <div class="fotky">
+    <figure class="v"><img src="img/foto/11.webp" alt="Černobílý portrét ženy v šeru" loading="lazy" style="object-position:left center"></figure>
+    <figure class="t"><img src="img/foto/01.webp" alt="Portrét muže v saku" loading="lazy"></figure>
+    <figure class="t"><img src="img/foto/02.webp" alt="Firemní portrét" loading="lazy"></figure>
+    <figure class="w"><img src="img/foto/13.webp" alt="Žena foukající bubliny" loading="lazy"></figure>
+    <figure class="w"><img src="img/foto/05.webp" alt="Portrét matky s dcerou" loading="lazy"></figure>
+    <figure class="t"><img src="img/foto/03.webp" alt="Štěně v ateliéru" loading="lazy"></figure>
+    <figure class="t"><img src="img/foto/04.webp" alt="Rodinný portrét" loading="lazy"></figure>
+    <figure class="w"><img src="img/foto/08.webp" alt="Interiér restaurace" loading="lazy"></figure>
+    <figure class="t"><img src="img/g3.webp" alt="Portrét muže v modrém světle" loading="lazy"></figure>
+    <figure class="t"><img src="img/foto/07.webp" alt="Portrét ženy v bílém" loading="lazy"></figure>
+    <figure class="w"><img src="img/foto/12.webp" alt="Silueta tanečnice v józe" loading="lazy"></figure>
+    <figure class="t"><img src="img/g4.webp" alt="Svatební pár v lese" loading="lazy"></figure>
+    <figure class="t"><img src="img/foto/10.webp" alt="Detail dívčího portrétu" loading="lazy"></figure>
+  </div>
+</section>
+
+<section class="sec ref" id="reference" style="padding-top:20px">
+  <div class="sec-h"><div><span class="mono k">04 · Reference</span><h2>Komu pomáháme <em>růst</em></h2></div><p>Firmy, instituce i menší podniky z Plzně a okolí, pro které jsme fotili a točili.</p></div>
+  <ul class="loga">
+    <li><img src="img/klienti/doosan.png" alt="Doosan Škoda Power" style="height:20px" width="240" height="20" loading="lazy"></li>
+    <li><img src="img/klienti/lear.png" alt="Lear" style="height:36px" width="134" height="36" loading="lazy"></li>
+    <li><img src="img/klienti/cbgrid.png" alt="CB Grid" style="height:52px" width="46" height="52" loading="lazy"></li>
+    <li><img src="img/klienti/plzensky-kraj.png" alt="Plzeňský kraj" style="height:38px" width="126" height="38" loading="lazy"></li>
+    <li><img src="img/klienti/visit-pk.png" alt="Visit Plzeňský kraj" style="height:52px" width="73" height="52" loading="lazy"></li>
+    <li><img src="img/klienti/grafia.png" alt="Grafia" style="height:52px" width="81" height="52" loading="lazy"></li>
+    <li><img src="img/klienti/crossfit-plzen.png" alt="CrossFit Plzeň" style="height:34px" width="143" height="34" loading="lazy"></li>
+    <li><img src="img/klienti/purkmistr.png" alt="Purkmistr" style="height:30px" width="165" height="30" loading="lazy"></li>
+    <li><img src="img/klienti/radiohouse.png" alt="Radiohouse" style="height:33px" width="148" height="33" loading="lazy"></li>
+  </ul>
+</section>
+
+<section class="sec" id="stab" style="padding-top:20px">
+  <div class="sec-h"><div><span class="mono k">05 · Štáb</span><h2>Čtyři lidi, <em>jeden cíl</em></h2></div><p>Každý z nás umí něco jiného. Dohromady zvládneme celou produkci.</p></div>
+  <div class="crew">
+    <article><figure><img src="img/paja.webp" alt="Pája" loading="lazy"><div class="slate mono"><span>Take 1</span><span>Pája</span></div></figure><h3>Pája</h3><p>Dvoumetrový drobek s kamerou a zkušenostmi, které nepřehlédnete.</p></article>
+    <article><figure><img src="img/david.webp" alt="David" loading="lazy"><div class="slate mono"><span>Take 2</span><span>David</span></div></figure><h3>David</h3><p>Kreativní duše týmu, master of AI, který navzdory svému účesu jde s dobou.</p></article>
+    <article><figure><img src="img/misa.webp" alt="Míša" loading="lazy"><div class="slate mono"><span>Take 3</span><span>Míša</span></div></figure><h3>Míša</h3><p>Fotí, spravuje sítě a všimne si i drobku na saku tři metry od záběru.</p></article>
+    <article><figure><img src="img/lukas.webp" alt="Lukáš" loading="lazy"><div class="slate mono"><span>Take 4</span><span>Lukáš</span></div></figure><h3>Lukáš</h3><p>Profík každým coulem. Okamžik, který vy jen zahlédnete, on už má v kartě.</p></article>
+  </div>
+</section>
+
+<div class="stripe"></div>
+<section class="end" id="kontakt">
+  <div class="end-l">
+    <span class="mono k">06 · Kontakt</span>
+    <h2>Pojďme natočit váš <em>další záběr</em></h2>
+    <p>Napište nám, co potřebujete. Ozveme se s nápadem a cenou.</p>
+    <div class="cinfo">
+      <a href="mailto:info@studiops.cz"><span class="mono">E-mail</span><b>info@studiops.cz</b></a>
+      <a href="tel:+420776542686"><span class="mono">Telefon</span><b>+420 776 542 686</b></a>
+      <div><span class="mono">Studio</span><b>Houškova 35, Plzeň-Slovany</b></div>
+    </div>
+  </div>
+  <form class="form" name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="https://studiops-nahled.netlify.app/dekujeme">
+    <input type="hidden" name="form-name" value="kontakt"><p hidden><label>Nevyplňovat <input name="bot-field"></label></p>
+    <div class="f-top mono"><span>● Nová zakázka</span><span>Take 1</span></div>
+    <div class="row2">
+      <label><span class="mono">Jméno</span><input name="jmeno" required autocomplete="name"></label>
+      <label><span class="mono">E-mail</span><input type="email" name="email" required autocomplete="email"></label>
+    </div>
+    <label><span class="mono">Telefon (nepovinné)</span><input type="tel" name="telefon" autocomplete="tel"></label>
+    <fieldset><legend class="mono">Co potřebujete</legend>
+      <div class="chips">
+        <label><input type="checkbox" name="sluzba" value="Foto"><span>Foto</span></label>
+        <label><input type="checkbox" name="sluzba" value="Video"><span>Video</span></label>
+        <label><input type="checkbox" name="sluzba" value="AI produkce"><span>AI produkce</span></label>
+        <label><input type="checkbox" name="sluzba" value="Podcast"><span>Podcast</span></label>
+        <label><input type="checkbox" name="sluzba" value="Pronájem studia"><span>Pronájem studia</span></label>
+      </div>
+    </fieldset>
+    <label><span class="mono">Zpráva</span><textarea name="zprava" rows="4" required placeholder="Co chcete natočit nebo nafotit, kdy a kde…"></textarea></label>
+    <button class="btn" type="submit">Odeslat poptávku →</button>
+    <p class="gdpr">Jméno a kontakt použijeme jen k tomu, abychom vám odpověděli. Nikomu dalšímu je nepředáváme.</p>
+  </form>
+</section>
+<footer>
+  <img src="img/logo-bila.png" alt="Studio PS">
+  <span>Houškova 35, Plzeň-Slovany</span>
+  <nav><a href="https://www.instagram.com/studio__ps_/">Instagram</a><a href="https://www.youtube.com/@StudioPS-hr6ec">YouTube</a><a href="https://www.facebook.com/profile.php?id=61553299647324">Facebook</a></nav>
+</footer>
+<script>
+// slideshow v hledáčku
+(function(){const sl=[...document.querySelectorAll('.sl')],bt=[...document.querySelectorAll('#prog button')],L=document.getElementById('hudL'),Rr=document.getElementById('hudR');if(sl.length<2)return;
+ const DUR=6000,still=matchMedia('(prefers-reduced-motion: reduce)').matches;let i=0,t;
+ document.getElementById('prog').style.setProperty('--dur',DUR/1000+'s');
+ const load=k=>sl[k%sl.length].querySelectorAll('[data-src],[data-srcset]').forEach(e=>{if(e.dataset.srcset){e.srcset=e.dataset.srcset;e.removeAttribute('data-srcset')}if(e.dataset.src){e.src=e.dataset.src;e.removeAttribute('data-src')}});
+ // pohyb kamery stejný u všech snímků: pomalý nájezd
+ const MOVES=[[1.04,1.12,'0%','0%','0%','0%']],FADE=950,EASE='cubic-bezier(.77,0,.18,1)';
+ const box=document.getElementById('slides'),cut=document.createElement('i');cut.className='cut';box.appendChild(cut);
+ // šikmý řez zleva doprava (horní hrana o 20 % šířky napřed) + zlatá linka po hraně
+ const wipe=el=>{const w=box.clientWidth,h=box.clientHeight,ang=Math.atan(.2*w/h)*180/Math.PI,tr=`translate(-50%,-50%) rotate(${ang}deg)`;
+  cut.style.height=Math.hypot(h,.2*w)+40+'px';
+  cut.animate([{left:'-10%',opacity:1,transform:tr},{left:'110%',opacity:1,transform:tr}],{duration:FADE,easing:EASE});
+  el.animate([{clipPath:'polygon(0% 0%,0% 0%,-20% 100%,0% 100%)'},{clipPath:'polygon(0% 0%,120% 0%,100% 100%,0% 100%)'}],{duration:FADE,easing:EASE})};
+ const move=k=>{const [s0,s1,x0,y0,x1,y1]=MOVES[k%MOVES.length],st=sl[k].style;
+  st.setProperty('--s0',s0);st.setProperty('--s1',s1);st.setProperty('--x0',x0);st.setProperty('--y0',y0);st.setProperty('--x1',x1);st.setProperty('--y1',y1);st.setProperty('--kb',(DUR+FADE+600)/1000+'s')};
+ // přepnout až po dekódování fotky, ať se nic nedonačítá před očima (max. 2 s čekání)
+ const ready=k=>{const im=sl[k].querySelector('img');return Promise.race([im.decode?im.decode().catch(()=>{}):Promise.resolve(),new Promise(r=>setTimeout(r,2000))])};
+ let seq=0;
+ async function go(n,first){n=(n+sl.length)%sl.length;const my=++seq;clearTimeout(t);
+  bt.forEach((b,k)=>{b.classList.toggle('done',k<n);b.classList.remove('on')});void bt[n].offsetWidth;bt[n].classList.add('on');
+  if(!first){load(n);await ready(n);if(my!==seq)return;
+   const prev=sl[i];sl.forEach((x,k)=>{if(k!==i&&k!==n)x.classList.remove('on','out','live')});
+   move(n);sl[n].classList.remove('out','live');void sl[n].offsetWidth;sl[n].classList.add('live');
+   prev.classList.remove('on');prev.classList.add('out');sl[n].classList.add('on');if(!still)wipe(sl[n]);
+   setTimeout(()=>{if(sl[i]!==prev)prev.classList.remove('out','live')},FADE+100);i=n}
+  else move(0);
+  setTimeout(()=>load(i+1),1500);
+  L.textContent=sl[i].dataset.l;Rr.textContent=sl[i].dataset.r;if(!still)t=setTimeout(()=>go(i+1),DUR)}
+ bt.forEach((b,k)=>b.addEventListener('click',()=>go(k)));
+ document.addEventListener('visibilitychange',()=>{clearTimeout(t);if(!document.hidden&&!still)t=setTimeout(()=>go(i+1),DUR)});
+ go(0,true)})();
+// mobilní menu
+(function(){const b=document.querySelector('.burger'),n=document.getElementById('mnav');if(!b)return;
+ const set=o=>{n.hidden=!o;b.setAttribute('aria-expanded',o);b.setAttribute('aria-label',o?'Zavřít menu':'Otevřít menu');document.body.classList.toggle('menu',o);document.body.style.overflow=o?'hidden':'';
+  b.innerHTML=o?'<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l16 16M21 5L5 21"/></svg>':'<svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h20M3 18h20"/></svg>'};
+ b.addEventListener('click',()=>set(n.hidden));n.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>set(false)))})();
+// obhlídka studia
+(function(){const img=document.getElementById('scoutImg');if(!img)return;const cnt=document.getElementById('scoutCnt'),cap=document.getElementById('scoutCap');
+ document.querySelectorAll('.thumbs button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.thumbs button').forEach(x=>x.classList.toggle('on',x===b));
+  img.style.opacity=0;setTimeout(()=>{img.src='img/prostor/'+b.dataset.i+'.webp';img.alt=b.dataset.cap;cap.textContent=b.dataset.cap;cnt.textContent=b.dataset.i+' / 05';img.style.opacity=1},180)}))})();
+// zvuková vlna
+(function(){const w=document.getElementById('wave');if(!w)return;let s='',n=360,a=0;
+ for(let i=0;i<n;i++){a=a*.82+Math.random()*.18;const env=.35+.65*Math.abs(Math.sin(i/n*Math.PI*5.3))*(.6+.4*Math.sin(i/17));
+  const h=Math.max(.06,Math.min(1,(a*1.6+Math.random()*.25)*env));s+=`<rect x="${i*4}" y="${50-h*48}" width="2.4" height="${h*96}" rx="1"/>`}
+ w.innerHTML=`<svg viewBox="0 0 ${n*4} 100" preserveAspectRatio="none" fill="#5fb37f" opacity=".8">${s}</svg>`})();
+// přehrávací hlava podle scrollu
+(function(){const nle=document.getElementById('nle'),ph=document.getElementById('ph'),tc=document.getElementById('tcread');if(!nle)return;
+ const clips=[...nle.querySelectorAll('.clip')];const pad=v=>String(v).padStart(2,'0');
+ function upd(){if(getComputedStyle(ph).display==='none')return;const r=nle.getBoundingClientRect(),vh=innerHeight;
+  let p=(vh*.85-r.top)/(vh*.85+r.height*.3);p=Math.max(0,Math.min(1,p));
+  const lane=nle.querySelector('.lane').getBoundingClientRect();const x=lane.left-r.left+lane.width*(.01+.97*p);ph.style.left=x+'px';
+  const t=p*50;tc.textContent='00:00:'+pad(Math.floor(t))+':'+pad(Math.floor((t%1)*25));
+  const ax=r.left+x;clips.forEach(c=>{const b=c.getBoundingClientRect();c.classList.toggle('on',ax>=b.left&&ax<=b.right)})}
+ addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd()})();
+</script>
+<script>document.querySelectorAll('form[name=kontakt]').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();const b=f.querySelector('[type=submit]');if(b){b.disabled=true;b.textContent='Odesílám…'}
+fetch(f.action,{method:'POST',mode:'no-cors',body:new URLSearchParams(new FormData(f))}).then(()=>location.href='/dekujeme').catch(()=>f.submit())}))</script>
+</body></html>

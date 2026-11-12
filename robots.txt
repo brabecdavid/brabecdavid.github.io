@@ -1,0 +1,5 @@
+# Vyhledávače i AI roboti (GPTBot, ClaudeBot, PerplexityBot, Google-Extended…) jsou vítaní
+User-agent: *
+Allow: /
+
+Sitemap: https://studiops.cz/sitemap.xml

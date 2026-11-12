@@ -1,0 +1,192 @@
+/* Studio PS – podstránky služeb (vzhled K2) */
+:root{--bg:#0b0b0a;--bg2:#121110;--line:#26241f;--t:#f2eee6;--m:#8a857b;--s:#c2bbaa;--g:#e0b13c;--pad:48px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--t);font:400 16px/1.6 Inter,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.mono{font:500 11px/1.3 "JetBrains Mono",monospace;letter-spacing:.14em;text-transform:uppercase}
+h1 em,h2 em{font-style:normal;color:var(--g)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--g);color:#111;padding:15px 20px;font-weight:600;white-space:nowrap}
+.btn2{display:inline-flex;align-items:center;border:1.5px solid rgba(242,238,230,.6);padding:14px 18px;font-weight:600;white-space:nowrap;transition:border-color .2s,color .2s}
+.btn2:hover{border-color:var(--g);color:var(--g)}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.stripe{height:16px;background:repeating-linear-gradient(-60deg,#111 0 22px,var(--g) 22px 44px)}
+.sec{padding:100px var(--pad)}
+.sec-h{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:40px}
+.sec-h .k{color:var(--g);margin-bottom:14px;display:block}
+.sec-h h2{font:700 clamp(32px,3.6vw,54px)/1.04 Poppins;letter-spacing:-.035em}
+.sec-h p{color:var(--m);max-width:40ch}
+
+/* hlavička */
+.top{position:sticky;top:0;z-index:6;display:flex;justify-content:space-between;align-items:center;padding:24px var(--pad);border-bottom:1px solid var(--line);background:var(--bg)}
+.top img{height:28px;width:auto}
+.top nav{display:flex;gap:34px;font-size:14px;font-weight:500;align-items:center}
+.top nav a:hover{color:var(--g)}
+.top nav .cta{border:1.5px solid var(--g);color:var(--g);padding:9px 16px}
+.top nav .cur{color:var(--g)}
+.burger{display:none;background:none;border:0;color:var(--t);width:44px;height:44px;cursor:pointer}
+.mnav{position:fixed;inset:0;z-index:5;background:#0b0b0a;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:90px 24px 40px}
+.mnav[hidden]{display:none}
+.mnav a{font:700 38px/1.2 Poppins;letter-spacing:-.03em}
+.mnav .btn{font:600 17px Inter;align-self:flex-start;margin-top:22px}
+.mnav .mono{color:var(--m);margin-top:26px}
+body.menu .top{position:fixed;inset:0 0 auto}
+
+/* úvod podstránky */
+.sh{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:64px;align-items:center;padding:64px var(--pad) 96px}
+.crumb{display:flex;gap:10px;align-items:center;color:var(--m);margin-bottom:26px}
+.crumb a:hover{color:var(--g)}
+.crumb b{font-weight:500;color:var(--g)}
+.sh h1{font:800 clamp(46px,5.6vw,96px)/.95 Poppins;letter-spacing:-.045em;margin-bottom:26px}
+.sh .lead{font-size:19px;line-height:1.55;color:#d4cec2;max-width:46ch;margin-bottom:32px}
+.sh .specs{margin-top:44px}
+.frame{position:relative;aspect-ratio:4/5;border-radius:4px;overflow:hidden;background:#000}
+.frame img{width:100%;height:100%;object-fit:cover;object-position:var(--p,center)}
+.frame::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(11,11,10,.55),transparent 30%,transparent 75%,rgba(11,11,10,.4))}
+.frame .vf{position:absolute;z-index:2;inset:18px;pointer-events:none}
+.vf i{position:absolute;width:34px;height:34px;border:0 solid rgba(242,238,230,.8)}
+.vf .a{top:0;left:0;border-top-width:2px;border-left-width:2px}.vf .b{top:0;right:0;border-top-width:2px;border-right-width:2px}
+.vf .c{bottom:0;left:0;border-bottom-width:2px;border-left-width:2px}.vf .d{bottom:0;right:0;border-bottom-width:2px;border-right-width:2px}
+.hud{position:absolute;z-index:3;color:var(--t);background:rgba(10,9,8,.55);padding:6px 9px;border-radius:2px}
+.frame .hl{top:32px;left:32px;display:flex;align-items:center;gap:8px}
+.frame .hl::before{content:"";width:9px;height:9px;border-radius:50%;background:#e5483b;animation:blink 1.2s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.frame .hr{bottom:32px;right:32px}
+
+/* parametry */
+.specs{border-top:1px solid var(--line)}
+.specs div{display:flex;justify-content:space-between;gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}
+.specs .mono{color:var(--m);padding-top:3px;flex:none}
+.specs b{font-weight:500;text-align:right}
+
+/* co děláme = scény */
+.scenes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.scene{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:24px 22px 26px;position:relative;overflow:hidden}
+.scene::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--g);transform:scaleX(.18);transform-origin:left;transition:transform .4s}
+.scene:hover::before{transform:scaleX(1)}
+.scene .mono{color:var(--g)}
+.scene h3{font:700 21px/1.15 Poppins;letter-spacing:-.02em;margin:16px 0 10px}
+.scene p{color:var(--s);font-size:15px}
+
+/* ukázky */
+.fotky{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:clamp(150px,15vw,240px);grid-auto-flow:dense;gap:10px}
+.fotky figure{overflow:hidden;border-radius:4px;background:#151412}
+.smycka video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:6px;background:#151412}
+.fotky .t{grid-row:span 2}.fotky .w{grid-column:span 2;grid-row:span 2}.fotky .h{grid-column:span 2}
+.fotky .b{grid-column:1/-1;grid-row:span 2}
+.fotky.tri{grid-template-columns:repeat(3,1fr)}
+@media (max-width:760px){.fotky.tri{grid-template-columns:repeat(2,1fr)}}
+.fotky img,.fotky video{width:100%;height:100%;object-fit:cover;object-position:var(--p,center 30%);transition:transform .6s;display:block}
+.fotky figure:hover img{transform:scale(1.04)}
+.vids{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.vids .big{grid-column:span 2;grid-row:span 2}
+.vids4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:18px}  /* krátké spoty */
+.media{position:relative;display:flex;flex-direction:column;overflow:hidden;border-radius:6px;border:1px solid var(--line);background:#000}
+.media img{width:100%;aspect-ratio:16/9;object-fit:cover;opacity:.9;transition:transform .6s,opacity .3s}
+.vids .big img{flex:1;height:0;min-height:0;aspect-ratio:auto}
+.media:hover img{transform:scale(1.03);opacity:1}
+.media .meta{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:var(--bg2);border-top:1px solid var(--line)}
+.media .meta b{font:600 15px/1.25 Poppins}
+.media .meta span{color:var(--m)}
+.media .pl{position:absolute;left:18px;bottom:66px;width:56px;height:56px;border-radius:50%;background:var(--g);color:#111;display:grid;place-items:center;font-size:18px;box-shadow:0 0 0 10px rgba(224,177,60,.18)}
+.media img.zoom{transform:scale(1.13)}
+.media:hover img.zoom{transform:scale(1.16)}
+.more{display:inline-flex;gap:8px;color:var(--g);font-weight:600;white-space:nowrap}
+
+/* postup = časová osa */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);position:relative;border-top:1px solid var(--line);background:repeating-linear-gradient(90deg,#3a372f 0 1px,transparent 1px 14px) top/100% 8px no-repeat}
+.step{padding:34px 26px 0 0;position:relative}
+.step::before{content:"";position:absolute;top:-6px;left:0;width:11px;height:11px;border-radius:50%;background:var(--g);box-shadow:0 0 0 5px rgba(224,177,60,.18)}
+.step .mono{color:var(--g)}
+.step h3{font:700 22px/1.15 Poppins;letter-spacing:-.02em;margin:12px 0 10px}
+.step p{color:var(--s);font-size:15px;max-width:30ch}
+
+/* co dostanete */
+.get{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:64px;align-items:start}
+.get h2{font:700 clamp(32px,3.6vw,54px)/1.04 Poppins;letter-spacing:-.035em;margin:14px 0 18px}
+.get .k{color:var(--g)}
+.get p{color:var(--s);max-width:42ch}
+.note{margin-top:22px;padding:16px 18px;border-left:3px solid var(--g);background:var(--bg2);color:var(--s);font-size:15px}
+
+/* další služby */
+.others{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.oth{display:flex;border:1.5px solid rgba(255,255,255,.12);border-radius:5px;overflow:hidden;background:#2a2619;transition:border-color .2s,transform .2s}
+.oth:hover{border-color:var(--g);transform:translateY(-3px)}
+.oth .th{width:120px;flex:none;background-size:cover;background-position:center}
+.oth .in{padding:16px 18px;flex:1;min-width:0}
+.oth small{font:500 10px "JetBrains Mono";color:var(--g);letter-spacing:.1em}
+.oth b{display:block;font:600 18px/1.15 Poppins;margin:4px 0 4px}
+.oth span{font-size:14px;color:var(--s);display:block}
+
+/* kontakt */
+.end{padding:100px var(--pad);display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.end h2{font:800 clamp(38px,4.4vw,72px)/.98 Poppins;letter-spacing:-.045em;margin:16px 0 22px;max-width:13ch}
+.end .k{color:var(--g)}
+.end-l>p{color:var(--s);max-width:40ch;margin-bottom:36px}
+.cinfo{border-top:1px solid var(--line)}
+.cinfo>*{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.cinfo .mono{color:var(--m)}.cinfo b{font-weight:500}
+.cinfo a:hover b{color:var(--g)}
+.form{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:28px;display:grid;gap:18px}
+.f-top{display:flex;justify-content:space-between;color:var(--m);padding-bottom:14px;border-bottom:1px solid var(--line)}
+.f-top span:first-child{color:#e5483b}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form label>.mono,.form legend{display:block;color:var(--m);margin-bottom:8px}
+.form input:not([type=checkbox]),.form textarea{width:100%;background:#0b0b0a;border:1px solid #33302a;border-radius:3px;color:var(--t);font:400 16px Inter;padding:13px 14px;outline:none;resize:vertical}
+.form input:focus,.form textarea:focus{border-color:var(--g)}
+.form fieldset{border:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips span{display:inline-block;border:1px solid #3a372f;border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer;transition:.15s}
+.chips input:checked+span{background:var(--g);border-color:var(--g);color:#111}
+.chips input:focus-visible+span{outline:2px solid var(--g);outline-offset:2px}
+.form .btn{justify-self:start;border:0;cursor:pointer;font:600 16px Inter}
+footer{border-top:1px solid var(--line);padding:30px var(--pad);display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;color:var(--m);font-size:14px}
+footer img{height:24px;width:auto}
+footer nav{display:flex;gap:22px}
+footer a:hover{color:var(--g)}
+
+@media (max-width:1000px){
+  :root{--pad:28px}
+  .sh{grid-template-columns:1fr;gap:40px;padding-top:44px}
+  .frame{aspect-ratio:4/3;--p:var(--pm,center)}
+  .scenes{grid-template-columns:1fr 1fr}
+  .steps{grid-template-columns:1fr 1fr;row-gap:40px}
+  .get{grid-template-columns:1fr;gap:28px}
+  .others{grid-template-columns:1fr}
+  .end{grid-template-columns:1fr}
+  .vids{grid-template-columns:1fr 1fr}.vids4{grid-template-columns:1fr 1fr}.vids>.media:last-child:nth-child(even){grid-column:span 2}  /* lichý zbytek přes celou šířku */
+}
+@media (max-width:760px){
+  :root{--pad:16px}
+  .top{padding:16px}.top img{height:24px}
+  .top nav{display:none}.burger{display:block}
+  .sh{padding:32px 16px 64px}
+  .sh h1{font-size:44px}
+  .sh .lead{font-size:17px}
+  .sh{display:flex;flex-direction:column;align-items:stretch;gap:0}
+  .sh>div:first-child{display:contents}
+  .frame{aspect-ratio:1/1;order:2;margin-top:32px}
+  .sh .specs{order:3;margin-top:28px}
+  .frame .vf{inset:12px}.frame .hl{top:22px;left:22px}.frame .hr{bottom:22px;right:22px}
+  .sec{padding:64px 16px}
+  .sec-h{flex-direction:column;align-items:flex-start;gap:12px}
+  .scenes{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr;row-gap:0;border-top:0;background:none;border-left:1px solid var(--line);margin-left:5px}
+  .step{padding:0 0 30px 26px}
+  .step::before{top:4px;left:-6px}
+  .fotky{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;gap:8px}
+  .fotky .h{grid-column:span 2}
+  .vids,.vids4{grid-template-columns:1fr}.vids .big{grid-column:auto;grid-row:auto}
+  .vids .big img{flex:none;height:auto;aspect-ratio:16/9}
+  .oth .th{width:96px}
+  .end{padding:64px 16px;gap:36px}
+  .row2{grid-template-columns:1fr}
+  .form{padding:20px}
+  .form .btn{justify-self:stretch;justify-content:center}
+  footer{flex-direction:column;align-items:flex-start}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.form .gdpr{font-size:13px;color:var(--m);margin-top:-4px}

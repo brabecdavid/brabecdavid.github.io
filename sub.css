@@ -62,12 +62,12 @@ body.menu .top{position:fixed;inset:0 0 auto}
 .specs b{font-weight:500;text-align:right}
 
 /* co děláme = scény */
-.scenes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.scenes{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:14px}
 .scene{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:24px 22px 26px;position:relative;overflow:hidden}
 .scene::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:var(--g);transform:scaleX(.18);transform-origin:left;transition:transform .4s}
 .scene:hover::before{transform:scaleX(1)}
 .scene .mono{color:var(--g)}
-.scene h3{font:700 21px/1.15 Poppins;letter-spacing:-.02em;margin:16px 0 10px}
+.scene h3{font:700 21px/1.15 Poppins;letter-spacing:-.02em;margin:8px 0 10px}
 .scene p{color:var(--s);font-size:15px}
 
 /* ukázky */
@@ -131,7 +131,7 @@ body.menu .top{position:fixed;inset:0 0 auto}
 .cinfo a:hover b{color:var(--g)}
 .form{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:28px;display:grid;gap:18px}
 .f-top{display:flex;justify-content:space-between;color:var(--m);padding-bottom:14px;border-bottom:1px solid var(--line)}
-.f-top span:first-child{color:#e5483b}
+.f-top span:first-child{color:var(--g)}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .form label>.mono,.form legend{display:block;color:var(--m);margin-bottom:8px}
 .form input:not([type=checkbox]),.form textarea{width:100%;background:#0b0b0a;border:1px solid #33302a;border-radius:3px;color:var(--t);font:400 16px Inter;padding:13px 14px;outline:none;resize:vertical}
@@ -152,7 +152,7 @@ footer a:hover{color:var(--g)}
   :root{--pad:28px}
   .sh{grid-template-columns:1fr;gap:40px;padding-top:44px}
   .frame{aspect-ratio:4/3;--p:var(--pm,center)}
-  .scenes{grid-template-columns:1fr 1fr}
+  .scenes{grid-template-columns:1fr 1fr;grid-auto-flow:row}
   .steps{grid-template-columns:1fr 1fr;row-gap:40px}
   .get{grid-template-columns:1fr;gap:28px}
   .others{grid-template-columns:1fr}
@@ -173,13 +173,13 @@ footer a:hover{color:var(--g)}
   .frame .vf{inset:12px}.frame .hl{top:22px;left:22px}.frame .hr{bottom:22px;right:22px}
   .sec{padding:64px 16px}
   .sec-h{flex-direction:column;align-items:flex-start;gap:12px}
-  .scenes{grid-template-columns:1fr}
+  .scenes{grid-template-columns:1fr;grid-auto-flow:row}
   .steps{grid-template-columns:1fr;row-gap:0;border-top:0;background:none;border-left:1px solid var(--line);margin-left:5px}
   .step{padding:0 0 30px 26px}
   .step::before{top:4px;left:-6px}
   .fotky{grid-template-columns:repeat(2,1fr);grid-auto-rows:150px;gap:8px}
   .fotky .h{grid-column:span 2}
-  .vids,.vids4{grid-template-columns:1fr}.vids .big{grid-column:auto;grid-row:auto}
+  .vids,.vids4{grid-template-columns:1fr}.vids .big{grid-column:auto;grid-row:auto}.vids>.media:last-child:nth-child(even){grid-column:auto}
   .vids .big img{flex:none;height:auto;aspect-ratio:16/9}
   .oth .th{width:96px}
   .end{padding:64px 16px;gap:36px}

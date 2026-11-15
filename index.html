@@ -332,6 +332,18 @@ section[id]{scroll-margin-top:72px}
 .clip .in span{font-size:17px;line-height:1.45}
 @media (max-width:760px){.clip .in{padding:14px 16px}.clip .in b{font-size:20px;margin-bottom:6px}.clip .in span{font-size:15px}}
 @media (max-width:760px){.hero .fk{padding:14px 34px 14px 14px}.hero .fk b{font-size:20px}.hero .fk i{right:12px;bottom:auto}}
+/* služby jako přehledné dlaždice bez střihové osy, tým s rolemi (2026-11-15) */
+@media (min-width:1001px){
+  .ruler,.track.a,.ph,.lab{display:none}
+  .nle{background:none;border:0;display:grid;grid-template-columns:1fr 1fr;gap:14px;overflow:visible}
+  .track,.lane{display:contents}
+  .clip{position:static;width:auto!important;min-height:160px}
+}
+.nle .clip.on{border-color:rgba(255,255,255,.12);box-shadow:none}
+.nle .clip.on .in{background:#2a2619}.nle .clip.v.on .in{background:linear-gradient(180deg,#3b331c,#2b2615)}
+.nle .clip:hover{border-color:var(--g)}
+.crew .role{display:block;color:var(--g);font-size:11px;letter-spacing:.08em;margin:-2px 0 10px}
+.f-top span:first-child{color:var(--g)}
 </style><meta property="og:type" content="website"><meta property="og:locale" content="cs_CZ"><meta property="og:site_name" content="Studio PS"><meta property="og:title" content="Studio PS – fotoateliér, video, AI a podcasty v Plzni"><meta property="og:description" content="Fotoateliér, video a podcastové studio v Plzni na Slovanech. Focení portrétů a produktů, komerční video, AI produkce a podcasty. Jedno studio, čtyři lidi, celá produkce."><meta property="og:url" content="https://studiops.cz/"><meta property="og:image" content="https://studiops.cz/img/og/index.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "@id": "https://studiops.cz/#studio", "name": "Studio PS", "slogan": "Jedno studio. Čtyři lidi. Celá produkce.", "description": "Foto a video studio v Plzni na Slovanech: portréty a produktové foto, komerční video, AI produkce a podcasty. Ateliér o rozloze cca 70 m² k pronájmu.", "url": "https://studiops.cz/", "logo": "https://studiops.cz/img/logo-bila.png", "image": "https://studiops.cz/img/og/index.jpg", "email": "info@studiops.cz", "telephone": "+420776542686", "address": {"@type": "PostalAddress", "streetAddress": "Houškova 35", "addressLocality": "Plzeň", "addressRegion": "Plzeňský kraj", "addressCountry": "CZ"}, "areaServed": "Plzeň a Plzeňský kraj", "sameAs": ["https://www.instagram.com/studio__ps_/", "https://www.youtube.com/@StudioPS-hr6ec", "https://www.facebook.com/profile.php?id=61553299647324"], "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Portréty a produktové foto", "url": "https://studiops.cz/portrety.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Komerční video", "url": "https://studiops.cz/video.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "AI produkce", "url": "https://studiops.cz/ai.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Podcasty a video podcasty", "url": "https://studiops.cz/podcasty.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Pronájem studia", "description": "Ateliér na focení, podcastová scéna a zázemí, cca 70 m², Houškova 35, Plzeň"}, "priceSpecification": [{"@type": "UnitPriceSpecification", "price": 1500, "priceCurrency": "CZK", "description": "první 2 hodiny"}, {"@type": "UnitPriceSpecification", "price": 1000, "priceCurrency": "CZK", "unitCode": "HUR", "description": "každá další hodina"}]}]}</script>
 </head><body>
 
@@ -362,15 +374,15 @@ section[id]{scroll-margin-top:72px}
 </section>
 
 <section class="sec" id="sluzby">
-  <div class="sec-h"><div><span class="mono k">01 · Služby</span><h2>Co pro vás uděláme</h2></div><p>Celou produkci máme v jedné časové ose. Od prvního záběru po finální export.</p></div>
+  <div class="sec-h"><div><span class="mono k">Služby</span><h2>Co pro vás uděláme</h2></div><p>Fotíme, točíme, stříháme i generujeme. Každou zakázku zvládneme celou sami, od nápadu po hotový výstup.</p></div>
   <div class="nle" id="nle"><div class="ph" id="ph"></div>
     <div class="ruler"><div></div><div class="ticks"><span class="tcread" id="tcread">00:00:00:00</span><span style="left:4px">00:00</span><span style="left:20%">00:10</span><span style="left:40%">00:20</span><span style="left:60%">00:30</span><span style="left:80%">00:40</span></div></div>
     <div class="track"><div class="lab mono">V2</div><div class="lane">
       <a class="clip" href="portrety.html" style="order:1;left:1%;width:47%"><div class="th" style="background-image:url(img/foto/11.webp);background-position:12% 30%"></div><div class="in"><b>Portréty a produkty</b><span>Studiové světlo, které ladí s vaší značkou. Pro e-shop, web, kampaně i tisk.</span></div></a>
-      <a class="clip" href="ai.html" style="order:3;left:50%;width:48%"><div class="th" style="background-image:url(img/sluzby/ai/01.webp);background-position:center 45%"></div><div class="in"><b>AI produkce</b><span>Generované obrazy a videa pro koncepty, vizualizace a kampaně.</span></div></a>
+      <a class="clip" href="ai.html" style="order:2;left:50%;width:48%"><div class="th" style="background-image:url(img/sluzby/ai/01.webp);background-position:center 45%"></div><div class="in"><b>AI produkce</b><span>Generované obrazy a videa pro koncepty, vizualizace a kampaně.</span></div></a>
     </div></div>
     <div class="track"><div class="lab mono">V1</div><div class="lane">
-      <a class="clip v" href="video.html" style="order:2;left:1%;width:47%"><div class="th" style="background-image:url(img/svc-video.webp)"></div><div class="in"><b>Komerční video</b><span>Promo, aftermovie, reklama. Scénář, natáčení, střih i barvy.</span></div></a>
+      <a class="clip v" href="video.html" style="order:3;left:1%;width:47%"><div class="th" style="background-image:url(img/svc-video.webp)"></div><div class="in"><b>Komerční video</b><span>Promo, aftermovie, reklama. Scénář, natáčení, střih i barvy.</span></div></a>
       <a class="clip v" href="podcasty.html" style="order:4;left:50%;width:48%"><div class="th" style="background-image:url(img/slide/06.webp);background-position:center 45%"></div><div class="in"><b>Podcasty</b><span>Vlastní podcastová scéna, dvě kamery a studiový zvuk. Celé díly i klipy na sítě.</span></div></a>
       
     </div></div>
@@ -389,7 +401,7 @@ section[id]{scroll-margin-top:72px}
 <section class="sec" id="studio">
   <div class="loc">
     <div class="scout">
-      <div class="view"><img id="scoutImg" src="img/prostor/01.webp" alt="Fotostěna se světly" loading="lazy"><span class="hud mono tag">Lokace · Plzeň-Slovany</span><span class="hud mono cnt" id="scoutCnt">01 / 05</span><span class="hud mono cap" id="scoutCap">Fotostěna se světly</span></div>
+      <div class="view"><img id="scoutImg" src="img/prostor/01.webp" alt="Fotostěna se světly" loading="lazy"><span class="hud mono cnt" id="scoutCnt">01 / 05</span><span class="hud mono cap" id="scoutCap">Fotostěna se světly</span></div>
       <div class="thumbs" role="tablist" aria-label="Fotky studia">
         <button class="on" data-i="01" data-cap="Fotostěna se světly"><img src="img/prostor/01-n.webp" alt="" loading="lazy"></button>
         <button data-i="02" data-cap="Celý ateliér s krbem"><img src="img/prostor/02-n.webp" alt="" loading="lazy"></button>
@@ -399,7 +411,7 @@ section[id]{scroll-margin-top:72px}
       </div>
     </div>
     <div>
-      <span class="mono" style="color:var(--g)">02 · Studio a pronájem</span>
+      <span class="mono" style="color:var(--g)">Studio a pronájem</span>
       <h2>70 m² na Slovanech, kde natočíte <em>skoro cokoli</em></h2>
       <p>Fotoateliér, podcastová scéna a zázemí pro celý natáčecí den. Studio si můžete pronajmout i bez nás.</p>
       <div class="specs">
@@ -416,7 +428,7 @@ section[id]{scroll-margin-top:72px}
 </section>
 
 <section class="sec" id="portfolio" style="padding-top:20px">
-  <div class="sec-h"><div><span class="mono k">03 · Portfolio</span><h2>Z naší <em>střižny</em></h2></div><a class="more" href="https://www.youtube.com/@StudioPS-hr6ec">Všechna videa na YouTube →</a></div>
+  <div class="sec-h"><div><span class="mono k">Portfolio</span><h2>Z naší <em>střižny</em></h2></div><a class="more" href="https://www.youtube.com/@StudioPS-hr6ec">Všechna videa na YouTube →</a></div>
   <div class="bin bin1">
     <a class="media" href="https://youtu.be/UB-7-dYRnvc"><img src="img/video/loreal.webp" alt="Módní přehlídka L’Oréal" loading="lazy"><span class="pl">▶</span><span class="dur">1:08</span><div class="meta"><b>Módní přehlídka L’Oréal</b><span class="mono">Karlovy Vary</span></div></a>
   </div>
@@ -441,7 +453,7 @@ section[id]{scroll-margin-top:72px}
 </section>
 
 <section class="sec ref" id="reference" style="padding-top:20px">
-  <div class="sec-h"><div><span class="mono k">04 · Reference</span><h2>Komu pomáháme <em>růst</em></h2></div><p>Firmy, instituce i menší podniky z Plzně a okolí, pro které jsme fotili a točili.</p></div>
+  <div class="sec-h"><div><span class="mono k">Reference</span><h2>Komu pomáháme <em>růst</em></h2></div><p>Firmy, instituce i menší podniky z Plzně a okolí, pro které jsme fotili a točili.</p></div>
   <ul class="loga">
     <li><img src="img/klienti/doosan.png" alt="Doosan Škoda Power" style="height:20px" width="240" height="20" loading="lazy"></li>
     <li><img src="img/klienti/lear.png" alt="Lear" style="height:36px" width="134" height="36" loading="lazy"></li>
@@ -456,21 +468,21 @@ section[id]{scroll-margin-top:72px}
 </section>
 
 <section class="sec" id="stab" style="padding-top:20px">
-  <div class="sec-h"><div><span class="mono k">05 · Štáb</span><h2>Čtyři lidi, <em>jeden cíl</em></h2></div><p>Každý z nás umí něco jiného. Dohromady zvládneme celou produkci.</p></div>
+  <div class="sec-h"><div><span class="mono k">Štáb</span><h2>Čtyři lidi, <em>jeden cíl</em></h2></div><p>Každý z nás umí něco jiného. Dohromady zvládneme celou produkci.</p></div>
   <div class="crew">
-    <article><figure><img src="img/paja.webp" alt="Pája" loading="lazy"><div class="slate mono"><span>Take 1</span><span>Pája</span></div></figure><h3>Pája</h3><p>Dvoumetrový drobek s kamerou a zkušenostmi, které nepřehlédnete.</p></article>
-    <article><figure><img src="img/david.webp" alt="David" loading="lazy"><div class="slate mono"><span>Take 2</span><span>David</span></div></figure><h3>David</h3><p>Kreativní duše týmu, master of AI, který navzdory svému účesu jde s dobou.</p></article>
-    <article><figure><img src="img/misa.webp" alt="Míša" loading="lazy"><div class="slate mono"><span>Take 3</span><span>Míša</span></div></figure><h3>Míša</h3><p>Fotí, spravuje sítě a všimne si i drobku na saku tři metry od záběru.</p></article>
-    <article><figure><img src="img/lukas.webp" alt="Lukáš" loading="lazy"><div class="slate mono"><span>Take 4</span><span>Lukáš</span></div></figure><h3>Lukáš</h3><p>Profík každým coulem. Okamžik, který vy jen zahlédnete, on už má v kartě.</p></article>
+    <article><figure><img src="img/paja.webp" alt="Pája" loading="lazy"></figure><h3>Pája</h3><span class="role mono">Kameraman</span><p>Dvoumetrový drobek s kamerou a zkušenostmi, které nepřehlédnete.</p></article>
+    <article><figure><img src="img/david.webp" alt="David" loading="lazy"></figure><h3>David</h3><span class="role mono">Kreativa a AI</span><p>Kreativní duše týmu, master of AI, který navzdory svému účesu jde s dobou.</p></article>
+    <article><figure><img src="img/misa.webp" alt="Míša" loading="lazy"></figure><h3>Míša</h3><span class="role mono">Fotografka a sociální sítě</span><p>Fotí, spravuje sítě a všimne si i drobku na saku tři metry od záběru.</p></article>
+    <article><figure><img src="img/lukas.webp" alt="Lukáš" loading="lazy"></figure><h3>Lukáš</h3><span class="role mono">Foto a video</span><p>Profík každým coulem. Okamžik, který vy jen zahlédnete, on už má v kartě.</p></article>
   </div>
 </section>
 
 <div class="stripe"></div>
 <section class="end" id="kontakt">
   <div class="end-l">
-    <span class="mono k">06 · Kontakt</span>
+    <span class="mono k">Kontakt</span>
     <h2>Pojďme natočit váš <em>další záběr</em></h2>
-    <p>Napište nám, co potřebujete. Ozveme se s nápadem a cenou.</p>
+    <p>Napište nám, co potřebujete. Do 24 hodin se ozveme s nápadem a cenou.</p>
     <div class="cinfo">
       <a href="mailto:info@studiops.cz"><span class="mono">E-mail</span><b>info@studiops.cz</b></a>
       <a href="tel:+420776542686"><span class="mono">Telefon</span><b>+420 776 542 686</b></a>
@@ -479,7 +491,7 @@ section[id]{scroll-margin-top:72px}
   </div>
   <form class="form" name="kontakt" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="https://studiops-nahled.netlify.app/dekujeme">
     <input type="hidden" name="form-name" value="kontakt"><p hidden><label>Nevyplňovat <input name="bot-field"></label></p>
-    <div class="f-top mono"><span>● Nová zakázka</span><span>Take 1</span></div>
+    <div class="f-top mono"><span>Poptávka</span></div>
     <div class="row2">
       <label><span class="mono">Jméno</span><input name="jmeno" required autocomplete="name"></label>
       <label><span class="mono">E-mail</span><input type="email" name="email" required autocomplete="email"></label>
